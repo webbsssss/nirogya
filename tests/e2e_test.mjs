@@ -373,6 +373,13 @@ eq(dom.all('.heatrow').length, villages.villages.length, 'one heatmap row per vi
 eq(dom.all('.kpi').length, 4, 'four headline KPIs');
 ok(dom.text().includes(villages.recommended_camp), `camp recommendation names ${villages.recommended_camp}`);
 ok(dom.text().includes('Recommended next mobile health camp'), 'operational recommendation shown');
+// The high-risk cluster in the demo cohort is SEEDED — bootstrap.py gives a few
+// villages a higher deprivation multiplier so the heatmap has a gradient to rank
+// instead of uniform noise. Presenting the hotspot as a finding without saying so
+// invites "so you invented your own answer", so the disclosure is asserted here
+// rather than left to whoever happens to be narrating.
+ok(dom.text().includes('deliberate high-risk cluster'),
+  'the dashboard discloses that the demo cluster is seeded');
 
 dom.loc.hash = '#/model';
 await until(() => dom.text().includes('Model card'), 'model card');
@@ -380,6 +387,12 @@ const stats = await api('/api/stats');
 ok(dom.text().includes(String(stats.model.diabetes_auc)), `model card states AUC ${stats.model.diabetes_auc}`);
 ok(dom.text().includes('FLOOR the model cannot override'), 'safety architecture explained');
 ok(dom.text().includes('Limitations we state up front'), 'limitations disclosed');
+// The AUC is computed ON the synthetic cohort, so it shows the method recovers the
+// structure the generator encoded — it is not a performance estimate for real
+// patients. Stating that is what separates a defensible number from a circular
+// one, and it is the first thing a clinician judge will probe.
+ok(dom.text().includes('measured ON the synthetic cohort'),
+  'the model card states the AUC is in-sample to the synthetic cohort');
 ok(dom.text().includes('SYNTHETIC'), 'synthetic data disclosed on the model card');
 
 // The screen a teammate opens on the demo phone to find out whether the device

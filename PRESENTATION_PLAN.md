@@ -206,6 +206,18 @@ Switch to the laptop.
 > average of 21.7% — so the recommendation is to put the next mobile camp in
 > Byndoor."*
 
+**Then say this without being asked.** Three seconds, and it closes a real trap —
+the cluster in the demo cohort is deliberate, `bootstrap.py` seeds it so the
+heatmap has a gradient to rank instead of uniform noise. If a judge finds that in
+the generator after you presented Byndoor as a *finding*, it reads as inventing
+your own answer:
+
+> *"One thing — this demo cohort was generated with a deliberate cluster in it, so
+> the heatmap has something real to rank. The ranking is what we built; on field
+> data it surfaces whichever village actually stands out."*
+
+The district screen now says this on-screen too, under the recommendation.
+
 Then open patient **NRG1020**:
 
 > *"Seven visits. Fasting glucose climbing, and the alert says +30.5 mg/dL from a
@@ -335,6 +347,15 @@ It's what a seven-field checklist supports, and it's in line with published IDRS
 and CBAC validation. If we showed you 0.95 from six questions you should assume
 leakage and go looking for it. The operating point matters more here anyway — at
 80% sensitivity we hold 46% specificity, PPV 0.205.
+
+**[L] "But that AUC is measured on your own synthetic data — what does it actually tell me?"**
+Very little about real patients, and we'd rather say that before you have to ask
+it. What it tells you is that the method recovers the relationships our generator
+encoded from published marginals — a sanity check on the implementation, not a
+performance estimate. A performance claim needs a prospective pilot against
+PHC-confirmed outcomes and we don't have one. The model card says exactly this on
+screen. **Lead with this framing rather than being walked into it; it is a much
+stronger position than defending 0.713 as though it were a clinical result.**
 
 **[L] "Why tune for sensitivity?"**
 Because the costs are asymmetric. A false positive costs a bus fare to the PHC. A
@@ -543,6 +564,7 @@ Everyone memorises these. A hesitation on your own headline number is expensive.
 |---|---|
 | Diabetes AUC | **0.713** (prevalence 14.5%) |
 | Operating point | threshold 0.10 → **80% sensitivity**, 46% specificity, PPV 0.205 |
+| Youden optimal | threshold 0.13 → 70% sens / 62% spec |
 | Hypertension AUC | 0.642 — deliberately weak, and we say so |
 | HIGH band cut-off | diabetes probability ≥ **0.2342** (85th percentile) |
 | Cohort | **1,200 patients / 1,218 screenings / 8 Udupi villages** |
@@ -550,9 +572,10 @@ Everyone memorises these. A hesitation on your own headline number is expensive.
 | Nirogya HIGH band | **21.7%** |
 | Hotspot village | **Byndoor, 36.8%** high-risk vs 21.7% district average |
 | Trend patient | **NRG1020** — 7 visits, +30.5 mg/dL, baseline 179.5 |
+| Backup trend patients | NRG2178, NRG1196 |
 | Demo HIGH profile | 58, male, waist 97, sedentary, both parents diabetic, current tobacco → CBAC 8, IDRS 90 |
 | Model size | 7 coefficients; `risk.js` is 236 lines |
-| Tests | 2,100 parity cases · 170 e2e checks · 4,235 validation assertions |
+| Tests | 2,100 parity cases · 172 e2e checks · 4,235 validation assertions |
 | India diabetes burden | **101 million (ICMR-INDIAB, Lancet 2023)** |
 
 ---

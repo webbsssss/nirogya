@@ -124,7 +124,7 @@ tests/
   voice_test.mjs       spoken-number and yes/no parsing, 227 assertions
   validate_test.py     server-side validation, 4,235 assertions
   shell_test.mjs       precache completeness + CSP conformance, 106 assertions
-  e2e_test.mjs         full offline→queue→sync→dashboard run, 170 assertions
+  e2e_test.mjs         full offline→queue→sync→dashboard run, 172 assertions
   dom_shim.mjs         minimal DOM+IndexedDB so the real UI code runs under Node
   gen_parity_cases.py  writes the boundary-case fixture to STDOUT (redirect it)
 run_all.sh         build + every test, eight stages, one command
@@ -157,34 +157,19 @@ run_all.sh         build + every test, eight stages, one command
 
 ---
 
-## Numbers (regenerate with `./run_all.sh`; don't trust this table if it disagrees)
+## Numbers
 
-| | |
-|---|---|
-| Diabetes AUC | **0.713** (prevalence 14.5%) |
-| Operating point | threshold 0.10 → **80% sensitivity**, 46% specificity, PPV 0.205 |
-| Youden optimal | threshold 0.13 → 70% sens / 62% spec |
-| Hypertension AUC | 0.642 — deliberately weak, see the model card |
-| HIGH band | diabetes probability ≥ 0.2342 (85th percentile) |
-| Cohort | 1,200 patients / 1,218 screenings / 8 Udupi villages |
-| CBAC ≥ 4 refers | **46.0%** of everyone screened |
-| Nirogya HIGH band | **21.7%** |
+Every performance figure lives on the **model card inside the app** (`#/model`),
+rendered directly from `web/data/model_weights.json` — so it cannot disagree with
+the model that is actually running. AUC and prevalence, the operating-point table
+with sensitivity / specificity / PPV, the learned per-feature weights, and the
+stated limitations are all on that one screen.
 
-**On AUC 0.713:** this is the right number to defend, not a disappointment. It is in line with published IDRS and CBAC validation for a seven-field checklist. An AUC of 0.95 from six questions invites a judge to look for leakage — and they would find it. An earlier throwaway prototype produced 0.837; **that number is dead, do not quote it.**
+Regenerate everything with `./run_all.sh`.
 
-**On 46% vs 21.7%:** be precise, because overclaiming here is the easiest way to lose credibility. Nirogya does **not** reduce referral load and by design cannot — the deterministic rules only ever escalate. What it adds is an *ordering inside* the referral floor, so the ASHA works the top 22% first instead of facing a 46% list with no priority at all. The floor is the government's; the ordering is ours.
-
----
-
-## Demo-day cheat sheet
-
-- Recommended camp / hotspot village: **Byndoor**, 36.8% high-risk vs 21.7% district average
-- Multi-visit patients for the trend screen: **NRG1020** (7 visits, +30.5 mg/dL fasting glucose), **NRG2178**, **NRG1196**
-- A profile that reliably lands HIGH: age 58, male, waist 97 cm, sedentary, both parents diabetic, current tobacco → CBAC 8, IDRS 90
-- **Deterioration alerts measure from the mean of the first two visits, not the first visit.** So NRG1020's fasting glucose reads 177 → 210 in the visit table (+33) while the alert says +30.5, from a baseline of 179.5. That is deliberate — one noisy opening reading should not be able to invent or hide an alert — and the alert now states the baseline and shows the reconciliation underneath. If a judge does the subtraction from the table, you have the answer.
-- The airplane-mode moment is the most valuable thing in the demo — but it only works if `#/preflight` says **Offline reload: YES** on that device. Check it, on that phone, on that Wi-Fi. And demo the mic **before** you switch airplane mode on.
-
-Full choreography, judge Q&A and failure drills: `../NIROGYA_3DAY_BATTLE_PLAN.md` §6–§7.
+A hand-maintained copy of these numbers used to live in this file. It is gone
+rather than updated, deliberately: a second copy of a generated figure is a copy
+that can drift, and this one already had.
 
 ---
 

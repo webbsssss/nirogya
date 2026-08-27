@@ -281,7 +281,7 @@ one.
 | 5 voice | spoken-number parsing, 227 assertions |
 | 6 validation | anything reaching the scorer unchecked, 4,235 assertions |
 | 7 shell + CSP | a file the app boots from missing from the precache list |
-| 8 end-to-end | the whole offline → queue → sync → dashboard path, 170 checks |
+| 8 end-to-end | the whole offline → queue → sync → dashboard path, 172 checks |
 
 The last check is the one to mention if asked about test discipline: it asserts
 the tests left the demo database byte-for-byte as stage 1 built it. The e2e suite
