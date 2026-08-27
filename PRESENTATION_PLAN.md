@@ -554,6 +554,24 @@ decision. Happy to show any of those.
 Open it. The repo is on the laptop and the harness runs in under a minute. Do not
 be precious about this — it's your strongest ground.
 
+**[VL if they open the repo] "Your deck lists React Native, FastAPI, XGBoost, PostgreSQL, scikit-learn and SHAP. None of that is in your repo."**
+Correct, and worth answering head-on rather than hedging. The deck's stack is the
+**production architecture**; the prototype is deliberately zero-dependency —
+Python standard library, no client framework, SQLite. That was a constraint we
+chose, not one we hit: it installs from a URL with no build step and no app store,
+which is why it runs on whatever Android an ASHA already has and why it works with
+no network. XGBoost is the server-side heavy tier in the two-tier design and isn't
+built. **Do not claim any of it is shipped.** If pressed on SHAP specifically, the
+answer is favourable: we don't use SHAP on-device because logistic regression
+gives an *exact* contribution and SHAP would be an approximation of something we
+can compute directly.
+
+**"Your deck says local encrypted storage. Is it encrypted?"**
+No. Queued records sit in IndexedDB unencrypted in this prototype. Encryption at
+rest, auth and a consent flow are all named as not-implemented on the model card,
+and that's the honest state. Say it plainly — it is a checkable claim and hedging
+on it costs more than admitting it.
+
 ---
 
 ## 7. Numbers cheat card
@@ -623,22 +641,56 @@ look further."*
 
 ---
 
-## 10. Unverified — drop or source before tomorrow
+## 10. Deck audit — scanned, and what is still open
 
 Your own battle plan flagged these and they are still open. **Any number you
 cannot attribute to an author or journal should not leave your mouth.** One
 disproved figure taints every other number you gave.
 
-- [ ] The ~23% Gujarat referral follow-through figure — source?
-- [ ] The 45.5% West Bengal retention figure — source?
-- [ ] The Mysuru CBAC validation study — source?
-- [ ] CBAC per-item point values vs the current MoHFW NP-NCD guideline
-- [ ] Any ASHA smartphone-penetration figure you plan to quote
-- [ ] Every remaining number in the deck, against `nirogya/README.md`
+The deck to present is **`Nirogya_Feasibility_Viability_SIH-6 updated PATCHED.pptx`**
+— the newest of the three. The other two sit in `Desktop\SIH\` and are stale; make
+sure the right file is on the laptop. Its slide, chart and notes text has been
+scanned against every hazard below.
 
-If you cannot source one by tonight, the move is to cut it, not to soften it.
-*"Referral follow-through is poor and that's the gap we target"* is defensible.
-*"Referral follow-through is 23%"* without a citation is a question you will lose.
+**Clean — confirmed absent from the file**
+
+- ✅ No `0.837` anywhere.
+- ✅ No `77 million` — slides 5 and 6 say **101M, ICMR-INDIAB, Lancet Diabetes &
+  Endocrinology (2023)**.
+- ✅ No Pima Indians / UCI Heart claim.
+- ✅ No NFHS-4 — it correctly cites the NFHS-5 Karnataka factsheet.
+- ✅ No claim of *reducing* referral load.
+- ✅ No AUC figure in the deck at all, so the deck cannot contradict the model card
+  on your headline metric.
+
+**Sourced, contrary to the earlier worry.** Slide 6 carries a real references
+block: *Gujarat Study, Discover Public Health (2025)* for the 23% follow-through;
+*West Bengal Tribal Study (2025)* for 45.5% retention; *Mysuru Validation Study,
+Indian J. Medical Research*; *CBAC Operational Guidelines, MoHFW* for the ≥4
+cut-off. Journal and year for most, so "which study?" is answerable.
+
+- [ ] **The one weak citation:** the West Bengal study names no journal. If you
+      can't find it tonight, say *"a 2025 West Bengal tribal cohort study — I'd
+      have to get you the journal"* rather than inventing one.
+
+**Two live overclaims — prepare the answers in §6-H, do not edit the deck**
+
+- [ ] **Slide 3 Tech Stack** lists React Native, FastAPI, XGBoost, PostgreSQL,
+      React, scikit-learn, SHAP, Bhashini, ABHA, eSanjeevani. Only **Python and
+      SQLite** are in the repo — which is public, so this is a thirty-second check
+      for a judge who wants to make a point. Know the §6-H answer cold.
+- [ ] **Slide 6 says "local encrypted storage."** IndexedDB is not encrypted. Own
+      it, don't hedge.
+
+Editing the deck tonight is the wrong trade: `patch_deck.py`'s own comments warn
+slide 3 has **zero vertical slack**, so any longer replacement pushes text into the
+next heading. A prepared sentence costs nothing and cannot break the file.
+
+**Still open, unrelated to the deck**
+
+- [ ] CBAC per-item point values vs the current MoHFW NP-NCD guideline.
+- [ ] Any ASHA smartphone-penetration figure — with no source, describe it as the
+      deployment assumption a pilot would test rather than quoting a number.
 
 ---
 
