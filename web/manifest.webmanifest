@@ -1,0 +1,21 @@
+{
+  "name": "Nirogya — ASHA NCD Screening",
+  "short_name": "Nirogya",
+  "description": "Offline-first CBAC + IDRS chronic disease screening for ASHA workers in rural Karnataka.",
+  "start_url": "./index.html#/screen",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f6f8",
+  "theme_color": "#0f766e",
+  "lang": "en-IN",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "New screening", "url": "./index.html#/screen" },
+    { "name": "Follow-up queue", "url": "./index.html#/roster" }
+  ]
+}

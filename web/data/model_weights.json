@@ -1,0 +1,195 @@
+{
+  "diabetes": {
+    "w": [
+      0.27746252814,
+      0.561665339408,
+      0.087010716911,
+      0.308920647473,
+      0.2549510495,
+      -0.078253061584,
+      0.26181408925
+    ],
+    "b": -1.991821175751,
+    "mu": [
+      50.933333333333,
+      -2.280666666667,
+      0.494166666667,
+      0.2525,
+      0.168333333333,
+      0.1025,
+      0.399166666667
+    ],
+    "sd": [
+      10.023333887596,
+      7.886642265389,
+      0.499965971064,
+      0.500410248363,
+      0.374162026697,
+      0.303304714767,
+      0.489727106549
+    ],
+    "features": [
+      "age",
+      "waist_excess",
+      "is_male",
+      "family_hist_n",
+      "tobacco_current",
+      "alcohol",
+      "inactive"
+    ]
+  },
+  "hypertension": {
+    "w": [
+      0.489527318149,
+      0.115252201723,
+      0.114033625359,
+      -0.049852295192,
+      -0.160223792818,
+      0.027786342392,
+      0.012360225836
+    ],
+    "b": -1.255612923318,
+    "mu": [
+      50.933333333333,
+      -2.280666666667,
+      0.494166666667,
+      0.2525,
+      0.168333333333,
+      0.1025,
+      0.399166666667
+    ],
+    "sd": [
+      10.023333887596,
+      7.886642265389,
+      0.499965971064,
+      0.500410248363,
+      0.374162026697,
+      0.303304714767,
+      0.489727106549
+    ],
+    "features": [
+      "age",
+      "waist_excess",
+      "is_male",
+      "family_hist_n",
+      "tobacco_current",
+      "alcohol",
+      "inactive"
+    ]
+  },
+  "human_readable": {
+    "age": "Age",
+    "waist_excess": "Waist above abdominal-obesity cut-off",
+    "is_male": "Sex (male)",
+    "family_hist_n": "Family history of diabetes",
+    "tobacco_current": "Current tobacco use",
+    "alcohol": "Alcohol use",
+    "inactive": "Physical inactivity (<150 min/week)"
+  },
+  "eval": {
+    "diabetes": {
+      "auc": 0.713,
+      "prevalence": 0.145,
+      "n": 1200,
+      "youden_optimal": {
+        "threshold": 0.13,
+        "sensitivity": 0.695,
+        "specificity": 0.619,
+        "ppv": 0.236,
+        "referred_pct": 42.7,
+        "tp": 121,
+        "fp": 391,
+        "fn": 53,
+        "tn": 635
+      },
+      "at_90pct_sensitivity": {
+        "threshold": 0.08,
+        "sensitivity": 0.902,
+        "specificity": 0.33,
+        "ppv": 0.186,
+        "referred_pct": 70.3,
+        "tp": 157,
+        "fp": 687,
+        "fn": 17,
+        "tn": 339
+      },
+      "at_80pct_sensitivity": {
+        "threshold": 0.1,
+        "sensitivity": 0.816,
+        "specificity": 0.464,
+        "ppv": 0.205,
+        "referred_pct": 57.7,
+        "tp": 142,
+        "fp": 550,
+        "fn": 32,
+        "tn": 476
+      },
+      "at_70pct_sensitivity": {
+        "threshold": 0.12,
+        "sensitivity": 0.718,
+        "specificity": 0.573,
+        "ppv": 0.222,
+        "referred_pct": 46.9,
+        "tp": 125,
+        "fp": 438,
+        "fn": 49,
+        "tn": 588
+      }
+    },
+    "hypertension": {
+      "auc": 0.642,
+      "prevalence": 0.234,
+      "n": 1200,
+      "youden_optimal": {
+        "threshold": 0.26,
+        "sensitivity": 0.502,
+        "specificity": 0.712,
+        "ppv": 0.347,
+        "referred_pct": 33.8,
+        "tp": 141,
+        "fp": 265,
+        "fn": 140,
+        "tn": 654
+      },
+      "at_90pct_sensitivity": {
+        "threshold": 0.14,
+        "sensitivity": 0.922,
+        "specificity": 0.175,
+        "ppv": 0.255,
+        "referred_pct": 84.8,
+        "tp": 259,
+        "fp": 758,
+        "fn": 22,
+        "tn": 161
+      },
+      "at_80pct_sensitivity": {
+        "threshold": 0.17,
+        "sensitivity": 0.815,
+        "specificity": 0.33,
+        "ppv": 0.271,
+        "referred_pct": 70.4,
+        "tp": 229,
+        "fp": 616,
+        "fn": 52,
+        "tn": 303
+      },
+      "at_70pct_sensitivity": {
+        "threshold": 0.2,
+        "sensitivity": 0.701,
+        "specificity": 0.468,
+        "ppv": 0.287,
+        "referred_pct": 57.2,
+        "tp": 197,
+        "fp": 489,
+        "fn": 84,
+        "tn": 430
+      }
+    }
+  },
+  "bands": {
+    "high_dm_prob": 0.2342,
+    "percentile": 85,
+    "note": "HIGH = a CBAC Part B red flag, or referred by the deterministic rules AND diabetes risk at/above this absolute probability (the 85th percentile of the training cohort). Priority ordering inside the referral floor \u2014 it never removes a referral the government rules require."
+  },
+  "note": "Synthetic cohort calibrated to published Indian NCD marginals. Feature space == CBAC fields only. Deterministic CBAC/IDRS rules form a referral floor the model cannot override."
+}

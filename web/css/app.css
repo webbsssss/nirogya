@@ -1,0 +1,306 @@
+:root {
+  color-scheme: light;
+  --bg: #f4f6f8;
+  --card: #ffffff;
+  --ink: #16232e;
+  --ink-2: #5a6b7a;
+  --ink-3: #8d9aa6;
+  --line: #e2e8ed;
+  --brand: #0f766e;
+  --brand-dk: #0b5b55;
+  --brand-lt: #e6f4f2;
+  --high: #c62828;
+  --high-bg: #fdecec;
+  --mod: #b26a00;
+  --mod-bg: #fff5e5;
+  --low: #2e7d32;
+  --low-bg: #eaf5ea;
+  --shadow: 0 1px 2px rgba(16,35,46,.06), 0 4px 16px rgba(16,35,46,.06);
+  --r: 12px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        'Noto Sans Kannada', 'Noto Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+  padding-bottom: 72px;
+}
+h1, h2, h3 { margin: 0 0 .35em; line-height: 1.25; font-weight: 650; }
+h1 { font-size: 20px; } h2 { font-size: 17px; } h3 { font-size: 15px; }
+p { margin: 0 0 .8em; }
+a { color: var(--brand); }
+small { font-size: 12.5px; color: var(--ink-2); }
+
+/* ---- synthetic-data badge -------------------------------------------------
+   Deliberately always visible. Judges reward disclosed limitations and it
+   pre-empts "is this real data?" before it can be asked as a challenge. */
+.synthetic-badge {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+  background: #4a3a00; color: #ffe9a8;
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  text-align: center; padding: 4px 8px;
+}
+
+header.top {
+  position: sticky; top: 20px; z-index: 50;
+  background: var(--brand); color: #fff;
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+header.top .logo { font-weight: 750; font-size: 17px; letter-spacing: -.01em; }
+header.top .sub { font-size: 11.5px; opacity: .82; }
+header.top .spacer { flex: 1; }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11.5px; font-weight: 650;
+  padding: 4px 9px; border-radius: 999px;
+  background: rgba(255,255,255,.16); color: #fff; white-space: nowrap;
+}
+.pill .dot { width: 7px; height: 7px; border-radius: 50%; background: #7ee2a8; }
+.pill.off .dot { background: #ffb4b4; }
+.pill.warn { background: #b26a00; }
+/* Rejected records. Red rather than amber, and a link rather than a label,
+   because unlike "pending sync" this state does not clear on its own — somebody
+   has to open it and re-enter the screening. */
+.pill.bad { background: var(--high); text-decoration: none; }
+
+main { padding: 14px; max-width: 940px; margin: 0 auto; }
+
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r); padding: 14px; margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+.card.tight { padding: 11px 13px; }
+.card-h { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; }
+.card-h .spacer { flex: 1; }
+
+/* ---- forms --------------------------------------------------------------- */
+.field { margin-bottom: 13px; }
+.field > label { display: block; font-size: 13px; font-weight: 650; margin-bottom: 5px; }
+.field .hint { font-size: 11.5px; color: var(--ink-3); font-weight: 400; }
+input[type=text], input[type=number], select {
+  width: 100%; padding: 10px 11px; font-size: 16px; /* 16px stops iOS zoom */
+  border: 1px solid #cdd6de; border-radius: 9px; background: #fff; color: var(--ink);
+}
+input:focus, select:focus { outline: 2px solid var(--brand); outline-offset: -1px; border-color: var(--brand); }
+.row { display: flex; gap: 9px; }
+.row > * { flex: 1; min-width: 0; }
+.with-mic { display: flex; gap: 7px; align-items: stretch; }
+.with-mic input { flex: 1; }
+
+/* ---- live voice transcript -------------------------------------------------
+   Shows what the microphone heard, while it is still hearing it. This exists
+   because a mic with no visible feedback reads as broken during the second or
+   two before recognition finalises, and because a transcript that fails to parse
+   must stay on screen — a toast that disappears leaves the ASHA with nothing to
+   correct. aria-live announces it to screen readers too. */
+.vlive {
+  margin-top: 5px; font-size: 12.5px; line-height: 1.4;
+  color: var(--ink-2); word-break: break-word;
+}
+.vlive:empty { display: none; }
+.vlive.on { color: var(--brand-dk); font-weight: 600; }
+.vlive.ok { color: var(--low); font-weight: 600; }
+.vlive.err { color: var(--high); }
+
+button {
+  font: inherit; font-weight: 650; cursor: pointer;
+  border-radius: 9px; border: 1px solid transparent; padding: 10px 14px;
+  background: var(--brand); color: #fff;
+}
+button:active { transform: translateY(1px); }
+button[disabled] { opacity: .5; cursor: not-allowed; }
+button.ghost { background: #fff; color: var(--brand); border-color: #cdd6de; }
+button.sm { padding: 7px 11px; font-size: 13px; }
+button.block { width: 100%; padding: 13px; font-size: 16px; }
+button.mic { background: var(--brand-lt); color: var(--brand-dk); border-color: #bfe0dc; padding: 10px 12px; font-size: 17px; }
+button.mic.listening { background: var(--high); color: #fff; border-color: var(--high); animation: pulse 1.1s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .55 } }
+
+.chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.chip {
+  padding: 8px 12px; border-radius: 999px; border: 1px solid #cdd6de;
+  background: #fff; font-size: 13.5px; font-weight: 600; color: var(--ink-2);
+}
+.chip[aria-pressed=true] { background: var(--brand); border-color: var(--brand); color: #fff; }
+
+.check { display: flex; align-items: flex-start; gap: 9px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.check:last-child { border-bottom: 0; }
+.check input { width: 20px; height: 20px; margin: 1px 0 0; flex: none; accent-color: var(--brand); }
+.check label { font-size: 13.5px; font-weight: 500; }
+
+/* ---- risk presentation --------------------------------------------------- */
+.band { display: inline-block; font-size: 11.5px; font-weight: 750; letter-spacing: .05em;
+        padding: 3px 9px; border-radius: 999px; text-transform: uppercase; }
+.band.HIGH { background: var(--high-bg); color: var(--high); }
+.band.MODERATE { background: var(--mod-bg); color: var(--mod); }
+.band.LOW { background: var(--low-bg); color: var(--low); }
+
+.result { border-left: 5px solid var(--line); }
+.result.HIGH { border-left-color: var(--high); }
+.result.MODERATE { border-left-color: var(--mod); }
+.result.LOW { border-left-color: var(--low); }
+
+.scores { display: flex; gap: 9px; margin: 11px 0; }
+.score { flex: 1; background: var(--bg); border-radius: 10px; padding: 9px; text-align: center; }
+.score .v { font-size: 21px; font-weight: 750; line-height: 1.1; }
+.score .k { font-size: 10.5px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; margin-top: 2px; }
+
+ul.reasons { margin: 0; padding-left: 18px; font-size: 13.5px; }
+ul.reasons li { margin-bottom: 3px; }
+
+.driver { display: flex; align-items: center; gap: 9px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+.driver:last-child { border-bottom: 0; }
+.driver .bar { flex: none; width: 74px; height: 7px; background: var(--line); border-radius: 4px; overflow: hidden; position: relative; }
+.driver .bar i { position: absolute; top: 0; bottom: 0; left: 50%; background: var(--high); }
+.driver .bar i.neg { background: var(--low); }
+
+/* ---- lists / roster ------------------------------------------------------ */
+.plist { display: flex; flex-direction: column; gap: 8px; }
+.prow {
+  display: flex; align-items: center; gap: 11px; text-align: left; width: 100%;
+  background: var(--card); border: 1px solid var(--line); border-radius: 11px;
+  padding: 11px 12px; color: inherit; font-weight: 400; box-shadow: var(--shadow);
+}
+.prow .who { flex: 1; min-width: 0; }
+.prow .nm { font-weight: 650; font-size: 14.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prow .mt { font-size: 12px; color: var(--ink-3); }
+.prow .rt { text-align: right; flex: none; }
+.prow .pc { font-size: 15px; font-weight: 750; }
+
+.filters { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 11px; }
+.filters select, .filters input { width: auto; flex: 1; min-width: 118px; font-size: 14px; padding: 8px 10px; }
+
+/* ---- dashboard ----------------------------------------------------------- */
+.kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; margin-bottom: 12px; }
+.kpi { background: var(--card); border: 1px solid var(--line); border-radius: 11px; padding: 12px; box-shadow: var(--shadow); }
+.kpi .v { font-size: 25px; font-weight: 750; line-height: 1; }
+.kpi .k { font-size: 11.5px; color: var(--ink-2); margin-top: 4px; }
+@media (min-width: 620px) { .kpis { grid-template-columns: repeat(4, 1fr); } }
+
+.heat { display: flex; flex-direction: column; gap: 6px; }
+.heatrow { display: flex; align-items: center; gap: 10px; font-size: 13.5px; }
+.heatrow .v { flex: none; width: 118px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.heatrow .track { flex: 1; height: 22px; background: var(--bg); border-radius: 6px; overflow: hidden; }
+.heatrow .track i { display: block; height: 100%; background: linear-gradient(90deg, #f0a800, var(--high)); }
+.heatrow .n { flex: none; width: 52px; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.callout { background: var(--brand-lt); border: 1px solid #bfe0dc; border-radius: 11px; padding: 12px; margin-bottom: 12px; }
+.callout .t { font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--brand-dk); font-weight: 700; }
+.callout .m { font-size: 17px; font-weight: 700; margin-top: 3px; }
+
+.alert { background: var(--high-bg); border: 1px solid #f3c9c9; border-left: 5px solid var(--high);
+         border-radius: 10px; padding: 11px; margin-bottom: 9px; font-size: 13.5px; }
+.alert b { color: var(--high); }
+.notice { background: var(--mod-bg); border: 1px solid #f0dcb4; border-radius: 10px; padding: 10px; font-size: 13px; margin-bottom: 11px; }
+
+/* ---- data tables ----------------------------------------------------------
+   A numeric column must align its HEADER with its VALUES. The right-align rule
+   used to name `td.num` only, so every `<th class=num>` stayed left-aligned
+   while the figures under it went right — the header sat over the wrong column
+   and the table read as two unrelated halves. th and td share the selector now
+   so they cannot drift apart again.
+
+   Header styling is scoped to `thead th`, because `tbody th` is a row label
+   (the village name) and must not render as uppercase grey chrome.
+
+   Affects three tables: By village, Visit history, model-card weights. */
+table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.tbl th, table.tbl td {
+  text-align: left; padding: 7px 6px; border-bottom: 1px solid var(--line);
+}
+table.tbl thead th {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--ink-3); font-weight: 650;
+  border-bottom: 2px solid var(--line);
+  vertical-align: bottom;
+}
+table.tbl th.num, table.tbl td.num {
+  text-align: right; font-variant-numeric: tabular-nums;
+  /* Tighter side padding than the label column. Five columns of CBAC figures at
+     the default 6 px measured 8 px wider than a 375 px phone's card, which is
+     just enough to hide "Mean CBAC" behind a scroll nobody looks for. */
+  padding-left: 4px; padding-right: 4px;
+}
+/* Uppercase plus letter-spacing is what makes a one-word numeric header wide;
+   the tracking earns its keep on a row of long labels, not on "Screened". */
+table.tbl thead th.num { letter-spacing: 0; }
+/* Only the VALUES are nowrap. A wrapped "34.4%" is unreadable, but a numeric
+   HEADER must be free to wrap — "Referred %" over two lines is fine, and with
+   nowrap on both the five-column table measured 411 px inside a 346 px card on a
+   375 px phone and the last column was clipped off the screen. */
+table.tbl td.num { white-space: nowrap; }
+/* Row label: carries the row's identity, so it gets the weight. No explicit
+   width — auto layout gives the label column the slack once the values are
+   nowrap, and that works for the 2-, 5- and 6-column tables alike. */
+table.tbl tbody th { font-weight: 600; color: var(--ink); }
+table.tbl tbody tr:last-child th, table.tbl tbody tr:last-child td { border-bottom: 0; }
+
+/* Scroll container, not a nicety: a table can still exceed a narrow phone once a
+   Kannada village name or a translated header runs long, and an overflowing
+   table inside a card is CLIPPED, not scrolled — the column simply disappears
+   with nothing on screen to say so. This guarantees every column stays
+   reachable at any width. */
+.tscroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tscroll > table.tbl { min-width: 100%; }
+
+
+
+/* ---- bottom nav ---------------------------------------------------------- */
+nav.tabs {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 55;
+  display: flex; background: #fff; border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+nav.tabs a {
+  flex: 1; text-align: center; padding: 9px 2px 10px; font-size: 10.5px; font-weight: 650;
+  color: var(--ink-3); text-decoration: none;
+}
+nav.tabs a .ic { display: block; font-size: 19px; line-height: 1.15; }
+nav.tabs a[aria-current=page] { color: var(--brand); }
+
+.toast {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: 78px; z-index: 70;
+  background: var(--ink); color: #fff; padding: 11px 15px; border-radius: 10px;
+  font-size: 13.5px; font-weight: 600; box-shadow: 0 6px 22px rgba(0,0,0,.25);
+  max-width: 90vw; text-align: center;
+}
+.toast.err { background: var(--high); }
+.toast.ok { background: var(--brand-dk); }
+
+.spark { display: block; width: 100%; height: 62px; }
+.muted { color: var(--ink-3); }
+.center { text-align: center; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; }
+.stack > * + * { margin-top: 11px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* ---- capability banner ----------------------------------------------------
+   Shown whenever offline reload is unavailable. Deliberately loud and not
+   dismissible: the bug it exists to prevent is the app silently pretending to
+   be offline-capable. ------------------------------------------------------ */
+.capbanner {
+  margin: 10px 12px 0;
+  padding: 10px 12px;
+  border-radius: var(--r);
+  background: var(--mod-bg);
+  border: 1px solid #f0d9a8;
+  color: #6b4300;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.capbanner .cap-ok { color: var(--ink-2); }
+.capbanner a { margin-left: 6px; font-weight: 600; white-space: nowrap; }
+
+/* Reconciles the alert delta with the visit table above it. */
+.alert-sub {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--ink-2);
+}

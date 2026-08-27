@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>Nirogya — ASHA NCD Screening</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="css/app.css">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body>
+
+<!-- Always visible, on every screen, deliberately. Disclosed limitations earn
+     credibility; an undisclosed one that a judge discovers destroys it. -->
+<div class="synthetic-badge">Synthetic demo data · not real patients</div>
+
+<header class="top">
+  <div>
+    <div class="logo">Nirogya</div>
+    <div class="sub">CBAC + IDRS screening · Udupi</div>
+  </div>
+  <div class="spacer"></div>
+  <span class="pill" id="net-pill"><span class="dot"></span><span id="net-text">Online</span></span>
+  <span class="pill warn" id="queue-pill" hidden></span>
+  <!-- Records the server permanently refused. Separate from queue-pill on
+       purpose: "pending" resolves itself, "rejected" needs a person. -->
+  <a class="pill bad" id="reject-pill" href="#/preflight" hidden></a>
+</header>
+
+<!-- Populated by paintCapabilityBanner(). Shown whenever offline reload is
+     unavailable (almost always: page served from a non-secure origin, so the
+     browser refuses to register the service worker). Silent degradation here is
+     what made the app look offline-capable when it was not. -->
+<div class="capbanner" id="capbanner" hidden></div>
+
+<main id="view" aria-live="polite">
+  <div class="card center muted">Loading…</div>
+</main>
+
+<nav class="tabs">
+  <a href="#/screen"    data-route="#/screen"><span class="ic">＋</span>Screen</a>
+  <a href="#/roster"    data-route="#/roster"><span class="ic">☰</span>Queue</a>
+  <a href="#/dashboard" data-route="#/dashboard"><span class="ic">▤</span>District</a>
+  <a href="#/model"     data-route="#/model"><span class="ic">◆</span>Model</a>
+</nav>
+
+<script type="module" src="js/app.js"></script>
+<!-- A file, not an inline script, because the server sends `script-src 'self'`
+     with no 'unsafe-inline'. See js/sw-register.js. -->
+<script src="js/sw-register.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+# Line endings are pinned here rather than left to each machine's git config.
+#
+# Without this, a clone on Windows with core.autocrlf=true rewrites every text
+# file to CRLF on checkout, and two things break:
+#
+#   1. run_all.sh stops working on Linux and macOS. A CRLF shebang line makes the
+#      kernel look for an interpreter literally named "bash\r", and you get
+#      "bad interpreter: /usr/bin/env bash^M" or "$'\r': command not found" —
+#      an error that says nothing about line endings to the person reading it.
+#   2. web/data/model_weights.json stops being byte-reproducible. bootstrap.py
+#      writes it with newline="\n" precisely so the artifact is identical on every
+#      platform; a checkout filter that converts it to CRLF undoes that.
+#
+# eol=lf takes precedence over core.autocrlf, so this holds for anyone who clones
+# regardless of how their git is configured.
+
+* text=auto eol=lf
+
+# Shell scripts are the case where CRLF is fatal rather than merely untidy.
+*.sh text eol=lf
+
+# Binary: never apply end-of-line or text filters to these.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.db binary
+*.pptx binary
+*.zip binary
